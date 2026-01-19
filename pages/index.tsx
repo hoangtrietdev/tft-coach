@@ -59,9 +59,6 @@ export default function Home() {
               <Link href="/" className="text-purple-400 font-semibold hover:text-purple-300 transition-colors">
                 Team Comps
               </Link>
-              <Link href="/coach" className="text-gray-400 hover:text-white transition-colors">
-                AI Coach
-              </Link>
               <Link href="/coach" className="px-4 py-2 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-500 hover:to-pink-500 rounded-lg font-semibold transition-all transform hover:scale-105 shadow-lg shadow-purple-500/50">
                 Get Coached
               </Link>
