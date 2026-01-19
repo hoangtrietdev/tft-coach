@@ -92,8 +92,6 @@ export default function Home() {
             </div>
           </div>
 
-          {/* Top Ad */}
-          <AdBanner position="top" className="mt-6" />
         </div>
       </div>
 

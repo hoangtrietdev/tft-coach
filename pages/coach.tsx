@@ -157,9 +157,6 @@ export default function CoachPage() {
       </header>
 
       <div className="container mx-auto px-4 lg:px-6 py-6">
-        {/* Top Ad Banner */}
-        <AdBanner position="top" className="mb-6" />
-
         <div className="grid lg:grid-cols-3 gap-6">
           {/* Left Panel - Game State Input */}
           <div className="lg:col-span-1 space-y-4">
