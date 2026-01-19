@@ -3,6 +3,9 @@ import { Send, Sparkles, Target, Zap, Plus, X } from 'lucide-react';
 import Link from 'next/link';
 import { Message, GameState, Champion } from '../types';
 import AdBanner from '../components/AdBanner';
+import MarkdownMessage from '../components/MarkdownMessage';
+import CookieConsent from '../components/CookieConsent';
+import Footer from '../components/Footer';
 
 export default function CoachPage() {
   const [messages, setMessages] = useState<Message[]>([
@@ -313,9 +316,13 @@ export default function CoachPage() {
                           : 'bg-[#0B0E11] border border-gray-700 text-gray-100'
                       }`}
                     >
-                      <div className="whitespace-pre-wrap text-sm leading-relaxed">
-                        {msg.content}
-                      </div>
+                      {msg.role === 'assistant' ? (
+                        <MarkdownMessage content={msg.content} className="text-sm" />
+                      ) : (
+                        <div className="whitespace-pre-wrap text-sm leading-relaxed">
+                          {msg.content}
+                        </div>
+                      )}
                       <div className="text-xs opacity-50 mt-2">
                         {msg.timestamp?.toLocaleTimeString()}
                       </div>
@@ -365,6 +372,12 @@ export default function CoachPage() {
           </div>
         </div>
       </div>
+      
+      {/* Footer */}
+      <Footer />
+      
+      {/* Cookie Consent Banner */}
+      <CookieConsent />
     </div>
   );
 }

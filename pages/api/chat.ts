@@ -2,10 +2,11 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 import groq, { DEFAULT_MODEL, MAX_TOKENS, TEMPERATURE } from '../../lib/groq';
 import { buildSystemPrompt, TFT_META_DATA } from '../../lib/tft-data';
 import { ChatRequest, GameState } from '../../types';
+import { filterContent, validateGameStateInput } from '../../lib/content-filter';
 
 /**
  * POST /api/chat
- * Main RAG endpoint for TFT AI Coach
+ * Main RAG endpoint for TFT AI Coach with content moderation
  */
 export default async function handler(
   req: NextApiRequest,
@@ -36,6 +37,29 @@ export default async function handler(
     // Validate request
     if (!messages || messages.length === 0) {
       return res.status(400).json({ error: 'Messages array is required' });
+    }
+
+    // Content moderation - check the last user message
+    const lastUserMessage = messages[messages.length - 1];
+    if (lastUserMessage.role === 'user') {
+      const filterResult = filterContent(lastUserMessage.content);
+      
+      if (!filterResult.allowed) {
+        return res.status(400).json({
+          error: 'Content Policy Violation',
+          message: filterResult.reason || 'Your message violates our content policy. Please keep conversations respectful and on-topic.'
+        });
+      }
+      
+      // Use sanitized content
+      lastUserMessage.content = filterResult.sanitized;
+    }
+
+    // Validate game state if provided
+    if (gameState && !validateGameStateInput(gameState)) {
+      return res.status(400).json({
+        error: 'Invalid game state data'
+      });
     }
 
     // Build system prompt with RAG context

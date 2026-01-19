@@ -4,6 +4,8 @@ import { Sparkles, Search, Filter, ChevronDown, Trophy, Clock, Target } from 'lu
 import { TFT_META_DATA } from '../lib/tft-data';
 import AdBanner from '../components/AdBanner';
 import ChampionImage from '../components/ChampionImage';
+import CookieConsent from '../components/CookieConsent';
+import Footer from '../components/Footer';
 
 export default function Home() {
   const [selectedTier, setSelectedTier] = useState<string>('all');
@@ -282,6 +284,12 @@ export default function Home() {
           <AdBanner position="sidebar" />
         </div>
       </div>
+      
+      {/* Footer */}
+      <Footer />
+      
+      {/* Cookie Consent Banner */}
+      <CookieConsent />
     </div>
   );
 }
