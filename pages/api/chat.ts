@@ -42,7 +42,7 @@ export default async function handler(
     const systemPrompt = buildSystemPrompt();
 
     // If gameState is provided, inject it into the user's message
-    let enhancedMessages = [...messages];
+    const enhancedMessages = [...messages];
     if (gameState) {
       const gameStateContext = formatGameState(gameState);
       
@@ -97,6 +97,7 @@ export default async function handler(
       }
     });
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (error: any) {
     console.error('Error in /api/chat:', error);
     

@@ -116,6 +116,7 @@ export default function CoachPage() {
   };
 
   // Update champion
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const updateChampion = (index: number, field: keyof Champion, value: any) => {
     setGameState(prev => ({
       ...prev,
@@ -127,7 +128,7 @@ export default function CoachPage() {
 
   return (
     <div className="min-h-screen bg-[#0B0E11]">
-      {/* Sticky Header - Match Homepage */}
+      {/* Sticky Header */}
       <header className="sticky top-0 z-50 bg-[#0B0E11]/95 backdrop-blur-md border-b border-gray-800">
         <div className="container mx-auto px-4 lg:px-6">
           <div className="flex items-center justify-between h-16">
@@ -138,7 +139,7 @@ export default function CoachPage() {
               </div>
               <div>
                 <h1 className="text-xl font-bold">TFT AI Coach</h1>
-                <p className="text-xs text-gray-400">Real-time Analysis</p>
+                <p className="text-xs text-gray-400">Powered by Groq AI</p>
               </div>
             </Link>
 
@@ -147,8 +148,8 @@ export default function CoachPage() {
               <Link href="/" className="text-gray-400 hover:text-white transition-colors">
                 Team Comps
               </Link>
-              <Link href="/coach" className="text-purple-400 font-semibold hover:text-purple-300 transition-colors">
-                AI Coach
+              <Link href="/coach" className="px-4 py-2 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-500 hover:to-pink-500 rounded-lg font-semibold transition-all transform hover:scale-105 shadow-lg shadow-purple-500/50">
+                Get Coached
               </Link>
             </nav>
           </div>

@@ -20,7 +20,6 @@ export default function ChampionImage({
   const normalizedName = normalizeChampionName(name);
   const imgSrc = `https://cdn.metatft.com/file/metatft/champions/tft16_${normalizedName === 'luciansenna' ? 'lucian' : normalizedName}.png`;
   const [hasError, setHasError] = useState(false);
-  console.log(imgSrc, normalizedName)
   const sizeClasses = {
     sm: 'w-12 h-12',
     md: 'w-16 h-16',
