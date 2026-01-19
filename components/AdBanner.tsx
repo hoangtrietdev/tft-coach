@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect } from 'react';
 
 interface AdBannerProps {
   position: 'top' | 'sidebar' | 'bottom';
@@ -8,67 +8,89 @@ interface AdBannerProps {
 }
 
 /**
- * AdBanner Component - Placeholder for Adsterra Ads
- * Replace the content with actual Adsterra ad code once you have your publisher ID
+ * AdBanner Component - Adsterra Ads Integration
  */
 export default function AdBanner({ position, className = '' }: AdBannerProps) {
-  // Placeholder styles based on position
+  useEffect(() => {
+    // Load Adsterra ad script for top banner (728x90)
+    if (position === 'top') {
+      const script = document.createElement('script');
+      script.src = 'https://www.highperformanceformat.com/0cfa02fa0d283aa13d4b82e520cd5eb1/invoke.js';
+      script.async = true;
+      document.body.appendChild(script);
+
+      return () => {
+        if (document.body.contains(script)) {
+          document.body.removeChild(script);
+        }
+      };
+    }
+    
+    // Load Adsterra ad script for sidebar (300x250)
+    if (position === 'sidebar') {
+      const script = document.createElement('script');
+      script.src = 'https://www.highperformanceformat.com/64a576d2a15d1e00a2624d6e84bbae1d/invoke.js';
+      script.async = true;
+      document.body.appendChild(script);
+
+      return () => {
+        if (document.body.contains(script)) {
+          document.body.removeChild(script);
+        }
+      };
+    }
+    
+    // Load Adsterra ad script for bottom/mobile (320x50)
+    if (position === 'bottom') {
+      const script = document.createElement('script');
+      script.src = 'https://www.highperformanceformat.com/d5c1f6df763bfaacd95e8f44cc0ce0e7/invoke.js';
+      script.async = true;
+      document.body.appendChild(script);
+
+      return () => {
+        if (document.body.contains(script)) {
+          document.body.removeChild(script);
+        }
+      };
+    }
+  }, [position]);
+
+  // Position-specific styles
   const positionStyles = {
-    top: 'h-24 w-full',
-    sidebar: 'h-64 w-full',
-    bottom: 'h-20 w-full'
+    top: 'h-[90px] w-full max-w-[728px] mx-auto',
+    sidebar: 'h-[250px] w-full max-w-[300px]',
+    bottom: 'h-[50px] w-full max-w-[320px] mx-auto'
   };
 
-  const placeholderText = {
-    top: '728x90 Banner Ad',
-    sidebar: '300x250 Square Ad',
-    bottom: '468x60 Banner Ad'
-  };
-
-  return (
-    <div 
-      className={`
-        bg-gray-800/50 border border-purple-500/30 rounded-lg
-        flex items-center justify-center
-        ${positionStyles[position]} 
-        ${className}
-      `}
-    >
-      <div className="text-center text-gray-500">
-        <div className="text-xs font-mono mb-1">ADSTERRA AD SPACE</div>
-        <div className="text-xs">{placeholderText[position]}</div>
-        <div className="text-[10px] mt-1 opacity-50">
-          Replace in components/AdBanner.tsx
+  if (position === 'top') {
+    return (
+      <div className={`flex items-center justify-center ${positionStyles[position]} ${className}`}>
+        <div id="adsterra-top-banner">
+          {/* Adsterra 728x90 Banner */}
         </div>
       </div>
-    </div>
-  );
-}
+    );
+  }
+  
+  if (position === 'sidebar') {
+    return (
+      <div className={`flex items-center justify-center ${positionStyles[position]} ${className}`}>
+        <div id="adsterra-sidebar-banner">
+          {/* Adsterra 300x250 Sidebar */}
+        </div>
+      </div>
+    );
+  }
+  
+  if (position === 'bottom') {
+    return (
+      <div className={`flex items-center justify-center ${positionStyles[position]} ${className}`}>
+        <div id="adsterra-mobile-banner">
+          {/* Adsterra 320x50 Mobile Banner */}
+        </div>
+      </div>
+    );
+  }
 
-/**
- * INTEGRATION INSTRUCTIONS:
- * 
- * 1. Sign up for Adsterra: https://publishers.adsterra.com/
- * 2. Create ad placements for your site
- * 3. Get the ad code (should look like):
- * 
- * <script type="text/javascript">
- *   atOptions = {
- *     'key' : 'YOUR_KEY_HERE',
- *     'format' : 'iframe',
- *     'height' : 250,
- *     'width' : 300,
- *     'params' : {}
- *   };
- * </script>
- * <script type="text/javascript" src="//www.topcreativeformat.com/YOUR_ID/invoke.js"></script>
- * 
- * 4. Replace the placeholder div above with:
- * 
- * <div 
- *   dangerouslySetInnerHTML={{ __html: `YOUR_ADSTERRA_CODE_HERE` }}
- *   className={className}
- * />
- * 
- * OR use React Helmet / next/script for better script injection.
- */
+  return null;
+}
